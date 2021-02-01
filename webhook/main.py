@@ -4,10 +4,9 @@ Copyright (c) 2021 Scott Lau
 """
 
 import logging
-from sys import exc_info
 
-from webhook.utils import config, log_init
 from webhook import server
+from webhook.utils import config, log_init
 
 
 class Runner(object):
@@ -20,7 +19,7 @@ class Runner(object):
             dev_mode = config.get("dev.dev_mode")
         except AttributeError:
             pass
-        logging.info('program is running in development mode: {}'.format(dev_mode))
+        logging.getLogger(__name__).info('program is running in development mode: {}'.format(dev_mode))
         server_ip = config.get("server.ip")
         server_port = config.get("server.port")
         server.run(host=server_ip, port=server_port)
@@ -31,8 +30,8 @@ def main():
     try:
         log_init()
         state = Runner().run()
-    except Exception:
-        logging.error('An error occurred.', exc_info=exc_info())
+    except Exception as e:
+        logging.getLogger(__name__).exception('An error occurred.', exc_info=e)
     else:
         return state
 
