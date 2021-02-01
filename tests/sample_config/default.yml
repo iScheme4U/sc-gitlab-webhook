@@ -2,6 +2,7 @@ dev:
   # whether this program is running is development mode
   dev_mode: False
 
+# flask server info
 server:
-  ip: localhost
+  ip: "localhost"
   port: 8080

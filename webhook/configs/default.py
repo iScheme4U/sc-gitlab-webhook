@@ -3,8 +3,9 @@ DEFAULT_CONFIG = {
     "dev": {
         "dev_mode": False,
     },
+    # flask server info
     "server": {
         "ip": "localhost",
-        "port": 8080
+        "port": 8080,
     }
 }
