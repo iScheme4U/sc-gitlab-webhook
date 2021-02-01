@@ -1,3 +1,7 @@
 dev:
   # whether this program is running is development mode
   dev_mode: False
+
+server:
+  ip: localhost
+  port: 8080
