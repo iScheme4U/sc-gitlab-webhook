@@ -3,4 +3,8 @@ DEFAULT_CONFIG = {
     "dev": {
         "dev_mode": False,
     },
+    "server": {
+        "ip": "localhost",
+        "port": 8080
+    }
 }

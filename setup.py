@@ -60,5 +60,6 @@ setup(
     python_requires='>=3.6',
     install_requires=[
         'config42>=0.4.4',
+        'flask>=1.1.2',
     ],
 )

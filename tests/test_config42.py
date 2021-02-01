@@ -1,6 +1,6 @@
 import unittest
 
-from webhook.config import config
+from webhook.utils import config
 
 
 class MyTestCase(unittest.TestCase):

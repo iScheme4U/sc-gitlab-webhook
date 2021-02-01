@@ -3,10 +3,11 @@
 Copyright (c) 2021 Scott Lau
 """
 
-from sys import stdout, stderr
-from traceback import print_exc
+import logging
+from sys import exc_info
 
-from webhook.config import config
+from webhook.utils import config, log_init
+from webhook import server
 
 
 class Runner(object):
@@ -17,22 +18,26 @@ class Runner(object):
         dev_mode = False
         try:
             dev_mode = config.get("dev.dev_mode")
-        except:
+        except AttributeError:
             pass
-        print('program is running in development mode: {}'.format(dev_mode))
+        logging.info('program is running in development mode: {}'.format(dev_mode))
+        server_ip = config.get("server.ip")
+        server_port = config.get("server.port")
+        server.run(host=server_ip, port=server_port)
         return 0
 
 
 def main():
     try:
+        log_init()
         state = Runner().run()
     except Exception:
-        # Flush the problems we have printed so far to avoid the traceback appearing in between them.
-        stdout.flush()
-        print(file=stderr)
-        print('An error occurred.', file=stderr)
-        print_exc()
+        logging.error('An error occurred.', exc_info=exc_info())
     else:
-        return state;
+        return state
 
     return 0
+
+
+if __name__ == '__main__':
+    main()

@@ -23,6 +23,7 @@ to initialize the production configuration.
 ## Dependencies
 
 - config42 0.4.4
+- flask 1.1.2
 
 ## Changes
 
