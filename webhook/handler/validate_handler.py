@@ -3,8 +3,8 @@ import logging
 from webhook.handler import BaseHandler
 
 
-class LoggingHandler(BaseHandler):
-    """Logging handler: logging request json to file
+class ValidateHandler(BaseHandler):
+    """Validate json before handling
 
     """
 
@@ -12,5 +12,7 @@ class LoggingHandler(BaseHandler):
         result = BaseHandler.handle(self, json)
         if not result:
             return False
-        logging.getLogger(__name__).info("request json: %s", json)
+        if not json:
+            logging.info("no request json")
+            return False
         return True

@@ -2,6 +2,8 @@ from webhook.handler.handler import Handler
 
 
 class BaseHandler(Handler):
+    """Base handler for decorating use"""
+
     _handler: Handler = None
 
     def __init__(self, handler: Handler = None) -> None:
@@ -12,5 +14,6 @@ class BaseHandler(Handler):
         return self._handler
 
     def handle(self, json):
-        if self.handler:
-            self._handler.handle(None)
+        if self._handler:
+            return self._handler.handle(json)
+        return True
