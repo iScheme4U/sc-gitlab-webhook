@@ -2,14 +2,16 @@
 
 Copyright (c) 2021 Scott Lau
 """
-import logging
 
 from flask import request
 
 from webhook import server
+from webhook.handler import LoggingHandler
+
+handler = LoggingHandler()
 
 
 @server.route('/webhook')
 def webhook():
-    logging.debug(request.json)
+    handler.handle(request.json)
     return 'OK'
