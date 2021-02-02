@@ -11,7 +11,7 @@ from webhook.handler import LoggingHandler
 handler = LoggingHandler()
 
 
-@server.route('/webhook')
+@server.route('/webhook', methods=['POST'])
 def webhook():
     handler.handle(request.json)
     return 'OK'
