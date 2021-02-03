@@ -61,5 +61,6 @@ setup(
     install_requires=[
         'sc-config>=0.0.2',
         'flask>=1.1.2',
+        'rocketmq-client-python>=2.0.0',
     ],
 )
