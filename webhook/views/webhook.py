@@ -25,7 +25,9 @@
 Copyright (c) 2021 Scott Lau
 """
 
-from flask import request
+import logging
+
+from flask import request, abort
 
 from webhook import server
 from webhook.handler import LoggingHandler
@@ -35,5 +37,9 @@ handler = LoggingHandler()
 
 @server.route('/webhook', methods=['POST'])
 def webhook():
-    handler.handle(request.json)
+    request_json = request.json
+    if not request_json:
+        logging.getLogger(__name__).error("no request json")
+        abort(400)
+    handler.handle(request_json)
     return 'OK'
