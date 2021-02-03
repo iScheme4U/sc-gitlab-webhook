@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # The MIT License (MIT)
 #
 # Copyright (c) 2021 Scott Lau
@@ -20,28 +22,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import logging
+import unittest
 
-from scconfig.config import Config
+from webhook.utils import Singleton
 
-from webhook.configs.default import DEFAULT_CONFIG
-from .file_utils import ensure_dir
-from .log_utils import log_init
-from .singleton import Singleton
 
-# =========================================
-#       INSTANCES
-# --------------------------------------
-try:
-    # load configurations
-    config = Config.create(project_name="sc-gitlab-webhook", defaults=DEFAULT_CONFIG)
-except Exception as error:
-    config = {}
-    logging.getLogger(__name__).exception("failed to read configuration", exc_info=error)
+class Test(metaclass=Singleton):
+    def __init__(self):
+        print("Test __init__ called")
 
-__all__ = {
-    "ensure_dir",
-    "log_init",
-    "config",
-    "Singleton",
-}
+
+class SingletonTestCase(unittest.TestCase):
+    def test_singleton(self):
+        test_a = Test()
+        test_b = Test()
+        print(test_a)
+        print(test_b)
+        self.assertEqual(test_a, test_b)
+
+
+if __name__ == '__main__':
+    unittest.main()

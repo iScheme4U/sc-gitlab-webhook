@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # The MIT License (MIT)
 #
 # Copyright (c) 2021 Scott Lau
@@ -20,28 +22,42 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import logging
 
-from scconfig.config import Config
+class Singleton(type):
+    """A Singleton using metaclass
 
-from webhook.configs.default import DEFAULT_CONFIG
-from .file_utils import ensure_dir
-from .log_utils import log_init
-from .singleton import Singleton
+    Sample class:
 
-# =========================================
-#       INSTANCES
-# --------------------------------------
-try:
-    # load configurations
-    config = Config.create(project_name="sc-gitlab-webhook", defaults=DEFAULT_CONFIG)
-except Exception as error:
-    config = {}
-    logging.getLogger(__name__).exception("failed to read configuration", exc_info=error)
+    import unittest
 
-__all__ = {
-    "ensure_dir",
-    "log_init",
-    "config",
-    "Singleton",
-}
+    from webhook.utils import Singleton
+
+
+    class Test(metaclass=Singleton):
+        def __init__(self):
+            print("Test __init__ called")
+
+
+    class SingletonTestCase(unittest.TestCase):
+        def test_singleton(self):
+            test_a = Test()
+            test_b = Test()
+            print(test_a)
+            print(test_b)
+            self.assertEqual(test_a, test_b)
+
+    Sample output:
+    Test __init__ called
+    <singleton_test.Test object at 0x7fea09d650d0>
+    <singleton_test.Test object at 0x7fea09d650d0>
+    """
+
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        # uncomment if you want to call __init__ every time a object is created
+        # else:
+        #     cls._instances[cls].__init__(*args, **kwargs)
+        return cls._instances[cls]
