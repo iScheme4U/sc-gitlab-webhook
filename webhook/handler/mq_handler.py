@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from webhook.handler import BaseHandler
+from webhook.handler import BaseHandler, Handler
 from webhook.rocketmq.producer import ScProducer
 
 
@@ -31,8 +31,8 @@ class MessageQueueHandler(BaseHandler):
 
     _producer: ScProducer = None
 
-    def __init__(self):
-        BaseHandler.__init__(self)
+    def __init__(self, handler: Handler = None) -> None:
+        BaseHandler.__init__(self, handler)
         self._producer = ScProducer()
 
     def handle(self, json) -> bool:
