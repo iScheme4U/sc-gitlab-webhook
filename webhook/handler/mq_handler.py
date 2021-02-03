@@ -20,9 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import logging
-
 from webhook.handler import BaseHandler
+from webhook.rocketmq.producer import ScProducer
 
 
 class MessageQueueHandler(BaseHandler):
@@ -30,9 +29,15 @@ class MessageQueueHandler(BaseHandler):
 
     """
 
+    _producer: ScProducer = None
+
+    def __init__(self):
+        BaseHandler.__init__(self)
+        self._producer = ScProducer()
+
     def handle(self, json) -> bool:
         result = BaseHandler.handle(self, json)
         if not result:
             return False
-        logging.getLogger(__name__).info("adding message %s to mq", json)
+        self._producer.send_msg(msg_body=json)
         return True

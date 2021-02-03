@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # The MIT License (MIT)
 #
 # Copyright (c) 2021 Scott Lau
@@ -19,23 +21,3 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-DEFAULT_CONFIG = {
-    # whether this program is running is development mode
-    "dev": {
-        "dev_mode": False,
-    },
-    # flask server info
-    "server": {
-        "ip": "localhost",
-        "port": 8080,
-    },
-    "rocketmq": {
-        "name_server_ip": "localhost",
-        "name_server_port": 9876,
-        "group_id": "GITLAB_WEBHOOK_MSG",
-        "msg_topic": "GITLAB_WEBHOOK",
-        "msg_keys": "GITLAB",
-        "msg_tags": "GITLAB",
-    },
-}

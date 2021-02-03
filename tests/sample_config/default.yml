@@ -6,3 +6,11 @@ dev:
 server:
   ip: "localhost"
   port: 8080
+
+rocketmq:
+  name_server_ip: "localhost"
+  name_server_port: 9876
+  group_id: "GITLAB_WEBHOOK_MSG"
+  msg_topic: "GITLAB_WEBHOOK"
+  msg_keys: "GITLAB"
+  msg_tags: "GITLAB"

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # The MIT License (MIT)
 #
 # Copyright (c) 2021 Scott Lau
@@ -19,55 +21,41 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-"""The Main routine
-
-Copyright (c) 2021 Scott Lau
-"""
-
 import logging
 
-from webhook import server
-from webhook.rocketmq.producer import ScProducer
+from rocketmq.client import Producer, Message
+
 from webhook.utils import config, Singleton
-from webhook.utils import log_init
 
 
-class Runner(metaclass=Singleton):
-    _producer: ScProducer = None
+class ScProducer(metaclass=Singleton):
+    """RocketMQ message producer"""
+
+    _producer: Producer = None
+    _topic: str = None
+    _keys: str = None
+    _tags: str = None
 
     def __init__(self):
-        self._producer = ScProducer()
+        group_id = config.get("rocketmq.group_id")
+        name_server_ip = config.get("rocketmq.name_server_ip")
+        port = config.get("rocketmq.name_server_port")
+        self._producer = Producer(group_id)
+        self._producer.set_name_server_address("{}:{}".format(name_server_ip, port))
+        self._topic = config.get("rocketmq.msg_topic")
+        self._keys = config.get("rocketmq.msg_keys")
+        self._tags = config.get("rocketmq.msg_tags")
 
-    def run(self):
-        dev_mode = False
-        try:
-            dev_mode = config.get("dev.dev_mode")
-        except AttributeError:
-            pass
-        logging.getLogger(__name__).info('program is running in development mode: {}'.format(dev_mode))
-        # start producer
+    def start(self):
         self._producer.start()
-        # start flask server
-        server_ip = config.get("server.ip")
-        server_port = config.get("server.port")
-        server.run(host=server_ip, port=server_port)
-        # stop producer
+
+    def shutdown(self):
         self._producer.shutdown()
-        return 0
 
-
-def main():
-    try:
-        log_init()
-        state = Runner().run()
-    except Exception as e:
-        logging.getLogger(__name__).exception('An error occurred.', exc_info=e)
-    else:
-        return state
-
-    return 0
-
-
-if __name__ == '__main__':
-    main()
+    def send_msg(self, *, msg_body):
+        msg = Message(self._topic)
+        msg.set_keys(self._keys)
+        msg.set_tags(self._tags)
+        msg.set_body(msg_body)
+        ret = self._producer.send_sync(msg)
+        logging.getLogger(__name__).info("msg send status: %s, id: %s, offset: %s", ret.status, ret.msg_id, ret.offset)
