@@ -35,7 +35,7 @@ from webhook.utils import ensure_dir
 
 LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO').upper()
 LOG_FILE_NAME = os.environ.get('LOG_FILE_NAME', 'logs/sys.log')
-LOG_FORMAT = os.environ.get('LOG_FORMAT', '%(asctime)s [%(levelname)s]: %(message)s')
+LOG_FORMAT = os.environ.get('LOG_FORMAT', '%(asctime)s [%(levelname)s][%(name)s]: %(message)s')
 
 
 def log_init():

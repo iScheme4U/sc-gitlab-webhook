@@ -35,6 +35,6 @@ class ValidateHandler(BaseHandler):
         if not result:
             return False
         if not json:
-            logging.info("no request json")
+            logging.getLogger(__name__).info("no request json")
             return False
         return True

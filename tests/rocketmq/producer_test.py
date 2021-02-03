@@ -44,7 +44,7 @@ class ProducerTestCase(unittest.TestCase):
         msg.set_tags('XXX')
         msg.set_body('XXXX')
         ret = producer.send_sync(msg)
-        logging.info("msg send: %s, %s, %s", ret.status, ret.msg_id, ret.offset)
+        logging.getLogger(__name__).info("msg send: %s, %s, %s", ret.status, ret.msg_id, ret.offset)
         producer.shutdown()
 
 
