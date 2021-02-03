@@ -27,6 +27,8 @@ from webhook.handler.mq_handler import MessageQueueHandler
 from webhook.handler.noop_handler import NoOpHandler
 from webhook.handler.validate_handler import ValidateHandler
 
+msg_queue_handler = MessageQueueHandler(LoggingHandler(ValidateHandler()))
+
 __all__ = {
     "Handler",
     "BaseHandler",
@@ -34,4 +36,5 @@ __all__ = {
     "LoggingHandler",
     "NoOpHandler",
     "MessageQueueHandler",
+    "msg_queue_handler",
 }
