@@ -31,6 +31,7 @@ from flask import request, abort
 
 from webhook import server
 from webhook.handler import msg_queue_handler
+from webhook.exceptions import SendMsgException
 
 
 @server.route('/webhook', methods=['POST'])
@@ -39,5 +40,8 @@ def webhook():
     if not request_json:
         logging.getLogger(__name__).error("no request json")
         abort(400)
-    msg_queue_handler.handle(str(request_json))
+    try:
+        msg_queue_handler.handle(str(request_json))
+    except SendMsgException as e:
+        abort(500, e)
     return 'OK'

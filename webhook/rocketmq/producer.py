@@ -24,6 +24,8 @@
 import logging
 
 from rocketmq.client import Producer, Message
+from rocketmq.exceptions import RocketMQException
+from webhook.exceptions import SendMsgException
 
 from webhook.utils import config, Singleton
 
@@ -57,5 +59,11 @@ class ScProducer(metaclass=Singleton):
         msg.set_keys(self._keys)
         msg.set_tags(self._tags)
         msg.set_body(msg_body)
-        ret = self._producer.send_sync(msg)
-        logging.getLogger(__name__).info("msg send status: %s, id: %s, offset: %s", ret.status, ret.msg_id, ret.offset)
+        try:
+            ret = self._producer.send_sync(msg)
+            logging.getLogger(__name__).info("msg send status: %s, id: %s, offset: %s", ret.status, ret.msg_id,
+                                             ret.offset)
+            return True
+        except RocketMQException as e:
+            logging.getLogger(__name__).exception("failed to send message to mq", exc_info=e)
+            raise SendMsgException(e)

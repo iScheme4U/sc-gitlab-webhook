@@ -39,5 +39,4 @@ class MessageQueueHandler(BaseHandler):
         result = BaseHandler.handle(self, json)
         if not result:
             return False
-        self._producer.send_msg(msg_body=json)
-        return True
+        return self._producer.send_msg(msg_body=json)
