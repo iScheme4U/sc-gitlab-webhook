@@ -27,7 +27,7 @@ from webhook.handler import LoggingHandler, NoOpHandler, ValidateHandler, Messag
 from webhook.utils import log_init
 
 
-class MyTestCase(unittest.TestCase):
+class HandlerTestCase(unittest.TestCase):
 
     @staticmethod
     def setUpClass() -> None:
