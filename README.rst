@@ -19,10 +19,37 @@ It is possible to install the tool with `pip`::
 Configuration
 -------------
 
-You can copy `default.yml <tests/sample_config/default.yml>`_ to `~/.sc-gitlab-webhook/production.yml`
+You can copy `default.yml <https://github.com/Scott-Lau/sc-gitlab-webhook/blob/master/tests/sample_config/default.yml>`_ to `~/.sc-gitlab-webhook/production.yml`
 to initialize the production configuration.
 
-See `default.yml <tests/sample_config/default.yml>`_ for more information.
+The default configuration file looks like this::
+
+    dev:
+      # whether this program is running is development mode
+      dev_mode: False
+
+    # flask server info
+    server:
+      # flask server IP
+      ip: "localhost"
+      # flask server port
+      port: 8080
+
+    # rocketmq configurations
+    rocketmq:
+      # name server ip
+      name_server_ip: "localhost"
+      # name server port
+      name_server_port: 9876
+      # group id
+      group_id: "GITLAB_WEBHOOK_MSG"
+      # message topic
+      msg_topic: "GITLAB_WEBHOOK"
+      # message keys
+      msg_keys: "GITLAB"
+      # message tags
+      msg_tags: "GITLAB"
+
 
 Dependencies
 ------------

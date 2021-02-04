@@ -27,15 +27,24 @@ DEFAULT_CONFIG = {
     },
     # flask server info
     "server": {
+        # flask server IP
         "ip": "localhost",
+        # flask server port
         "port": 8080,
     },
+    # rocketmq configurations
     "rocketmq": {
+        # name server IP
         "name_server_ip": "localhost",
+        # name server port
         "name_server_port": 9876,
+        # group id
         "group_id": "GITLAB_WEBHOOK_MSG",
+        # message topic
         "msg_topic": "GITLAB_WEBHOOK",
+        # message keys
         "msg_keys": "GITLAB",
+        # message tags
         "msg_tags": "GITLAB",
     },
 }
