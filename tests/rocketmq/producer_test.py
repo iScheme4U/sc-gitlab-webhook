@@ -36,7 +36,7 @@ class ProducerTestCase(unittest.TestCase):
 
     def test_produce(self):
         producer = Producer('PID-XXX')
-        producer.set_name_server_address('172.16.188.2:9876')
+        producer.set_name_server_address('127.0.0.1:9876')
         producer.start()
 
         msg = Message('YOUR-TOPIC')

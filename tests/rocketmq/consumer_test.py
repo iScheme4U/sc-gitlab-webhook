@@ -35,7 +35,7 @@ class Consumer:
 
     def consume(self):
         consumer = PushConsumer('CID_XXX')
-        consumer.set_name_server_address('172.16.188.2:9876')
+        consumer.set_name_server_address('127.0.0.1:9876')
         consumer.subscribe('YOUR-TOPIC', self.callback)
         consumer.start()
 
