@@ -28,9 +28,8 @@ Copyright (c) 2021 Scott Lau
 import logging
 
 from webhook import server
-from webhook.rocketmq.producer import ScProducer
-from webhook.utils import config, Singleton
-from webhook.utils import log_init
+from webhook.producer import ScProducer
+from webhook.utils import config, Singleton, log_init
 
 
 class Runner(metaclass=Singleton):

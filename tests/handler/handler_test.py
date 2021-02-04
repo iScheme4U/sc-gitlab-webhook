@@ -23,7 +23,7 @@
 import logging
 import unittest
 
-from webhook.handler import LoggingHandler, NoOpHandler, ValidateHandler, MessageQueueHandler
+from webhook.handlers import LoggingHandler, MessageQueueHandler, NoOpHandler, ValidateHandler
 from webhook.utils import log_init
 
 

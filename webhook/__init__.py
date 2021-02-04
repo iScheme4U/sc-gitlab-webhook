@@ -29,6 +29,11 @@ from flask import Flask
 __version__ = "0.0.1"
 
 # flask
+
 server = Flask(__name__)
+
+from webhook.handlers import MessageQueueHandler, LoggingHandler, ValidateHandler
+
+msg_queue_handler = MessageQueueHandler(LoggingHandler(ValidateHandler()))
 
 from webhook import views
