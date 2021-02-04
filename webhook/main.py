@@ -29,7 +29,8 @@ import logging
 
 from webhook import server
 from webhook.producer import ScProducer
-from webhook.utils import config, Singleton, log_init
+from webhook.singleton import Singleton
+from webhook.utils import config, log_init
 
 
 class Runner(metaclass=Singleton):

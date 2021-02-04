@@ -25,7 +25,8 @@ from rocketmq.client import Producer, Message
 from rocketmq.exceptions import RocketMQException
 
 from webhook.exceptions import SendMsgException
-from webhook.utils import Singleton, config
+from webhook.singleton import Singleton
+from webhook.utils import config
 
 
 class ScProducer(metaclass=Singleton):

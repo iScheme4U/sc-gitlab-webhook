@@ -24,7 +24,7 @@
 
 import unittest
 
-from webhook.utils import Singleton
+from webhook.singleton import Singleton
 
 
 class Test(metaclass=Singleton):
