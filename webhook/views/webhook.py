@@ -39,5 +39,5 @@ def webhook():
     if not request_json:
         logging.getLogger(__name__).error("no request json")
         abort(400)
-    msg_queue_handler.handle(request_json)
+    msg_queue_handler.handle(str(request_json))
     return 'OK'
