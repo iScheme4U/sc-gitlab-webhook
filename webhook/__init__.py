@@ -26,7 +26,7 @@ Copyright (c) 2021 Scott Lau
 """
 from flask import Flask
 
-__version__ = "0.0.2"
+__version__ = "0.0.4"
 
 # flask
 

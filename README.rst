@@ -61,7 +61,7 @@ Dependencies
 Changes
 -------
 
-Version 0.0.2
+Version 0.0.4
     * Include sample config when packaging
 
 Version 0.0.1
