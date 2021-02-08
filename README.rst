@@ -62,6 +62,9 @@ Dependencies
 Changes
 -------
 
+Version 0.0.6
+    * Fix bug: convert dict to json
+
 Version 0.0.5
     * Use `sc-utilities <https://github.com/Scott-Lau/sc-utilities>`_ for logging
 

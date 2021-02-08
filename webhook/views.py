@@ -22,6 +22,7 @@
 
 
 import logging
+import json
 
 from flask import request, abort
 
@@ -36,12 +37,14 @@ def hello():
 
 @server.route('/webhook', methods=['POST'])
 def webhook():
-    request_json = request.json
-    if not request_json:
+    request_json_dict = request.json
+    if not request_json_dict:
         logging.getLogger(__name__).error("no request json")
         abort(400)
     try:
-        msg_queue_handler.handle(str(request_json))
+        # dump dict as json string
+        request_json = json.dumps(request_json_dict)
+        msg_queue_handler.handle(request_json)
     except SendMsgException as e:
         abort(500, e)
     return 'OK'
