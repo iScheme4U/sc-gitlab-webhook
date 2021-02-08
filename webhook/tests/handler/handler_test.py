@@ -23,29 +23,37 @@
 import logging
 import unittest
 
-from rocketmq.client import Producer, Message
+from scutils import log_init
 
-from webhook.utils import log_init
+from webhook.handlers import LoggingHandler, NoOpHandler, ValidateHandler
 
 
-class ProducerTestCase(unittest.TestCase):
+class HandlerTestCase(unittest.TestCase):
 
     @staticmethod
     def setUpClass() -> None:
         log_init()
 
-    def test_produce(self):
-        producer = Producer('PID-XXX')
-        producer.set_name_server_address('127.0.0.1:9876')
-        producer.start()
-
-        msg = Message('YOUR-TOPIC')
-        msg.set_keys('XXX')
-        msg.set_tags('XXX')
-        msg.set_body('XXXX')
-        ret = producer.send_sync(msg)
-        logging.getLogger(__name__).info("msg send: %s, %s, %s", ret.status, ret.msg_id, ret.offset)
-        producer.shutdown()
+    def test_handlers(self):
+        json = "json test"
+        noop_handler = NoOpHandler()
+        logging.getLogger(__name__).info('noop handle')
+        result = noop_handler.handle(json)
+        self.assertTrue(result)
+        handler = LoggingHandler()
+        logging.getLogger(__name__).info('login handle None')
+        result = handler.handle(None)
+        self.assertTrue(result)
+        logging.getLogger(__name__).info('login handle json')
+        result = handler.handle(json)
+        self.assertTrue(result)
+        validate_handler = ValidateHandler()
+        handler = LoggingHandler(validate_handler)
+        logging.getLogger(__name__).info('login and validate handler handle json')
+        result = handler.handle(json)
+        self.assertTrue(result)
+        result = handler.handle(None)
+        self.assertFalse(result)
 
 
 if __name__ == '__main__':

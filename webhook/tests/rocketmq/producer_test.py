@@ -20,31 +20,32 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import time
+import logging
+import unittest
 
-from rocketmq.client import PushConsumer, ConsumeStatus
+from rocketmq.client import Producer, Message
+from scutils import log_init
 
-from webhook.utils import log_init
 
+class ProducerTestCase(unittest.TestCase):
 
-class Consumer:
+    @staticmethod
+    def setUpClass() -> None:
+        log_init()
 
-    def callback(self, msg):
-        print(msg.id, msg.body)
-        return ConsumeStatus.CONSUME_SUCCESS
+    def test_produce(self):
+        producer = Producer('PID-XXX')
+        producer.set_name_server_address('127.0.0.1:9876')
+        producer.start()
 
-    def consume(self):
-        consumer = PushConsumer('CID_XXX')
-        consumer.set_name_server_address('127.0.0.1:9876')
-        consumer.subscribe('YOUR-TOPIC', self.callback)
-        consumer.start()
-
-        while True:
-            time.sleep(3600)
-        consumer.shutdown()
+        msg = Message('YOUR-TOPIC')
+        msg.set_keys('XXX')
+        msg.set_tags('XXX')
+        msg.set_body('XXXX')
+        ret = producer.send_sync(msg)
+        logging.getLogger(__name__).info("msg send: %s, %s, %s", ret.status, ret.msg_id, ret.offset)
+        producer.shutdown()
 
 
 if __name__ == '__main__':
-    log_init()
-    consumer = Consumer()
-    consumer.consume()
+    unittest.main()

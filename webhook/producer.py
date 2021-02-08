@@ -23,9 +23,9 @@ import logging
 
 from rocketmq.client import Producer, Message
 from rocketmq.exceptions import RocketMQException
+from scutils import Singleton
 
 from webhook.exceptions import SendMsgException
-from webhook.singleton import Singleton
 from webhook.utils import config
 
 

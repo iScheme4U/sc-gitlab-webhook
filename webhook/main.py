@@ -27,10 +27,12 @@ Copyright (c) 2021 Scott Lau
 
 import logging
 
+from scutils import Singleton
+from scutils import log_init
+
 from webhook import server
 from webhook.producer import ScProducer
-from webhook.singleton import Singleton
-from webhook.utils import config, log_init
+from webhook.utils import config
 
 
 class Runner(metaclass=Singleton):
