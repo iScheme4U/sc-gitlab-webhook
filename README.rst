@@ -19,8 +19,11 @@ It is possible to install the tool with `pip`::
 Configuration
 -------------
 
-You can copy `default.yml <https://github.com/Scott-Lau/sc-gitlab-webhook/blob/master/webhook/tests/sample_config/default.yml>`_ to `~/.sc-gitlab-webhook/production.yml`
-to initialize the production configuration.
+First, make sure /var/opt/sc directory exists, if not create this directory and make sure current user has the right
+to create files in this directory.
+
+You can copy `default.yml <https://github.com/Scott-Lau/sc-gitlab-webhook/blob/master/webhook/tests/sample_config/default.yml>`_
+to /var/opt/sc/.sc-gitlab-webhook/production.yml to initialize the production configuration.
 
 The default configuration file looks like this::
 
@@ -54,25 +57,10 @@ The default configuration file looks like this::
 Dependencies
 ------------
 
-* `sc-utilities <https://github.com/Scott-Lau/sc-utilities>`_ >= 0.0.1
-* `sc-config <https://github.com/Scott-Lau/sc-config>`_ >= 0.0.2
+* `sc-utilities <https://github.com/Scott-Lau/sc-utilities>`_ >= 0.0.2
+* `sc-config <https://github.com/Scott-Lau/sc-config>`_ >= 0.0.3
 * `flask <https://github.com/pallets/flask>`_ >= 1.1.2
 * `rocketmq-client-python <https://github.com/apache/rocketmq-client-python>`_ >= 2.0.0
-
-Changes
--------
-
-Version 0.0.6
-    * Fix bug: convert dict to json
-
-Version 0.0.5
-    * Use `sc-utilities <https://github.com/Scott-Lau/sc-utilities>`_ for logging
-
-Version 0.0.4
-    * Include sample config when packaging
-
-Version 0.0.1
-    * Initial version
 
 License
 -------
